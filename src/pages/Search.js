@@ -15,9 +15,6 @@ class Search extends Component {
   };
 
   componentDidMount() {
-    API.getBaseBreedsList()
-      .then(res => this.setState({ breeds: res.data.message }))
-      .catch(err => console.log(err));
 
     API.getCoinList()
       .then(res => {
