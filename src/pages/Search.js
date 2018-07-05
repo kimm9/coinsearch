@@ -9,8 +9,6 @@ import Alert from "../components/Alert"
 class Search extends Component {
   state = {
     search: "",
-    breeds: [],
-    results: [],
     coinresults: [],
     coins: [],
     error: ""
@@ -38,18 +36,6 @@ class Search extends Component {
     console.log(this.state.search)
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    API.getDogsOfBreed(this.state.search)
-      .then(res => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-        console.log(res.data.message)
-        this.setState({ results: res.data.message, error: "" });
-      })
-      .catch(err => this.setState({ error: err.message }));
-  };
 
   handleCoinSubmit = event => {
     event.preventDefault();
