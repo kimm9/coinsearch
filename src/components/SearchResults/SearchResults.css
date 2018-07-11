@@ -1,0 +1,17 @@
+
+
+.card, #searchId{
+  margin: auto;
+  width: 30rem;
+  padding: 10px;
+  border: 0px !important;
+}
+
+.card img{
+  height: 300px;
+
+}
+
+ul {
+    list-style-type: none;
+}

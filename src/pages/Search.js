@@ -9,6 +9,8 @@ import Alert from "../components/Alert"
 class Search extends Component {
   state = {
     search: "",
+    coinsym: "",
+    coinDataResults: [],
     coinresults: [],
     coins: [],
     error: ""
@@ -20,7 +22,7 @@ class Search extends Component {
       .then(res => {
         var coinNameArr=[];
         var coinList = res.data['Data']
-        console.log(coinList)
+        console.log(coinNameArr)
         for (var key in coinList) {
           coinNameArr.push(coinList[key]["CoinName"])
         }
@@ -40,16 +42,33 @@ class Search extends Component {
       .then(res => {
         var coinobj=[];
         var coinInfo = [];
+        var sym;
         var coinList = res.data['Data']
         if (coinList === "error") {
           throw new Error(res.data.message);
         }
         for (var key in coinList) {
-          if (this.state.search.toUpperCase() == coinList[key]["CoinName"].toUpperCase() )
+          if (this.state.search.toUpperCase() == coinList[key]["CoinName"].toUpperCase() ) {
           coinobj.push(coinList[key])
+          sym = coinList[key]["Symbol"]
+          console.log(sym)
+          }
         }
-        this.setState({ coinresults: coinobj})
-        console.log(coinobj)
+        this.setState({ coinresults: coinobj, coinsym: sym})
+        console.log("https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=" + this.state.coinsym + "&tsym=USD")
+        API.getCoinData(this.state.coinsym)
+          .then(res => {
+            var coinData = [];
+            if (res.data.Response === "Error") {
+              throw new Error(res.data.Message);
+            }
+            coinData.push(res.data.DISPLAY[this.state.coinsym].USD)
+            console.log(coinData[0])
+            this.setState({ coinDataResults: coinData, error: res.data.Message})
+            console.log(this.state.coinDataResults)
+            console.log(this.state.error)
+          })
+          .catch(err => this.setState({ error: err.message }));
       })
   }
 
@@ -64,15 +83,14 @@ class Search extends Component {
             {this.state.error}
           </Alert>
           <SearchForm
-            handleFormSubmit={this.handleFormSubmit}
             handleCoinSubmit={this.handleCoinSubmit}
             handleInputChange={this.handleInputChange}
-            breeds={this.state.breeds}
             coins={this.state.coins}
           />
           <SearchResults 
           results={this.state.results}
           coinresults={this.state.coinresults}
+          coinDataResults={this.state.coinDataResults}
           />
         </Container>
       
