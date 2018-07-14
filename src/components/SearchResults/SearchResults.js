@@ -19,32 +19,26 @@ const SearchResults = props => (
 <div className="card-body"> 
 {props.coinDataResults.map(result => (
   <div>
-    <div>{result["PRICE"]}</div>
-    <div>{result["HIGHDAY"]}</div>
-    <div>{result["LOWDAY"]}</div>
-    <div>{result["CHANGEPCTDAY"]}</div>
-    <div>{result["CHANGEDAY"]}</div>
-    <div>{result["MKTCAP"]}</div>
-    <table className="table table-hover">
+  <table className="table table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Crytocurrency Data</th>
+      <th scope="col">Price</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">Circulating Supply</th>
+      <th scope="col">Volume (24H)</th>
+      <th scope="col">Day's Range</th>
+
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
+      <td scope="row">{result["PRICE"]}</td>
+      <td>{result["MKTCAP"]}</td>
+      <td>{result["SUPPLY"]}</td>
+      <td>{result["VOLUME24HOUR"]}</td>
+      <td>{result["LOWDAY"]} - {result["HIGHDAY"]}</td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-    </tr>
+
   </tbody>
 </table>
   </div>
