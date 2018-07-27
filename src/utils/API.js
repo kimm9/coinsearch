@@ -8,5 +8,5 @@ export default {
   },
   getCoinData: (coin) => {
     return axios.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + coin + "&tsyms=USD");
-  },
+  }
 };
