@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import API from "../utils/API"
-import Container from "../components/Container"
 import SearchForm from "../components/SearchForm"
 import SearchResults from "../components/SearchResults"
 import Alert from "../components/Alert"
@@ -40,10 +39,10 @@ class Search extends Component {
     event.preventDefault();
     API.getCoinList()
       .then(res => {
-        var coinobj=[];
-        var coinInfo = [];
-        var sym;
-        var coinList = res.data['Data']
+        let coinobj=[];
+        let coinInfo = [];
+        let sym;
+        let coinList = res.data['Data']
         if (coinList === "error") {
           throw new Error(res.data.message);
         }
@@ -51,7 +50,7 @@ class Search extends Component {
           if (this.state.search.toUpperCase() == coinList[key]["CoinName"].toUpperCase() ) {
           coinobj.push(coinList[key])
           sym = coinList[key]["Symbol"]
-          console.log(sym)
+          console.log(coinList[key])
           }
         }
         this.setState({ coinresults: coinobj, coinsym: sym})
@@ -74,8 +73,9 @@ class Search extends Component {
 
   render() {
     return (
-        <Container style={{ minHeight: "80%"}}>
-          <h1 className="text-center">Search</h1>
+        <div id="search">
+          <div className="container">
+          <h1 className="text-center" id="searchH">Search</h1>
           <Alert
             type="danger"
             style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
@@ -92,7 +92,9 @@ class Search extends Component {
           coinresults={this.state.coinresults}
           coinDataResults={this.state.coinDataResults}
           />
-        </Container>
+          </div>
+        </div>
+        
       
     )
   }

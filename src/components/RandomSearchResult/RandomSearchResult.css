@@ -1,0 +1,10 @@
+.card {
+  background-color: #112d4e;
+  color: #fff;
+  position: relative;
+  margin-bottom:100px;
+}
+
+.card-body {
+  font-size: 20px;
+}

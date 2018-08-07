@@ -1,5 +1,85 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Mukta', sans-serif;
+  min-height: 100vh;
 }
+
+#hero {
+  background-image: url("image/coin1.jpeg");
+  height: 80vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+
+}
+
+#caption {
+    position: relative;
+    left: 0;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+#caption p:nth-child(1) {
+    background-color: #112d4e;
+    color: #fff;
+    padding: 18px 18px 18px 18px;
+    font-size: 35px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    letter-spacing: 10px;
+    position: relative;
+    width: 33%;
+    margin: 0 auto;
+
+}
+#caption p:nth-child(2) {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ffd460;
+    padding: 20px;
+    font-size: 20px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    letter-spacing: 8px;
+    position: relative;
+    width: 25%;
+    margin: 0 auto;
+
+}
+
+#row2 {
+  background: #07689f;
+  text-align: center;
+  height: 80vh;
+  color: #fefaec;
+}
+
+#coinStack{
+  height: 400px;
+  padding: 0px 0px 70px 0px;
+}
+
+#discover, #search {
+  height: 150%;
+  background-color: #112d4e;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  font-family: 'Muli', sans-serif; 
+  font-size: 20px;
+}
+
+#hbtn h1{
+  padding-top: 50px;
+  text-align: center;
+  font-weight: 900;
+  color: #fff;
+}
+
+
+
+
+

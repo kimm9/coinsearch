@@ -3,17 +3,33 @@ import API from "../utils/API";
 import Card from "../components/Card";
 import Alert from "../components/Alert";
 import RandomSearchForm from "../components/RandomSearchForm"
-import RandomSearchResults from "../components/RandomSearchResults"
+import RandomSearchResult from "../components/RandomSearchResult"
 
 class Discover extends Component {
   state ={
-    coinsym:"",
+    coinsym:[],
     coinResults: [],
     error: ""
   }
 
   componentDidMount() {
-
+    API.getCoinList()
+      .then(res=> {
+        for (var key in res.data.Data) {
+          if(res.data.Data[key]["Symbol"] === "BTC") {
+            console.log(res.data.Data[key])
+            var sym =[]
+            sym.push(res.data.Data[key])
+            this.setState({coinsym: sym})
+          }
+        }
+      })
+    API.getCoinData("BTC")
+      .then(res => {
+        var symData = [];
+        symData.push(res.data.DISPLAY.BTC.USD)
+        this.setState({coinResults: symData})
+      })
   }
 
   handleBtnClick = event => {
@@ -21,59 +37,76 @@ class Discover extends Component {
   }
 
   loadNextCoinSubmit = event => {
+    event.preventDefault();
     API.getCoinList()
       .then(res => {
-        const coinSymArr =[];
-        const coinList = res.data.Data;
+        var coinSymArr =[];
+        var newRanSym = [];
+        var ranSymData = [];
+        var coinList = res.data.Data;
         for (var key in coinList) {
           coinSymArr.push(coinList[key])
         }
-        const ranSym = coinSymArr[Math.floor(Math.random() * coinSymArr.length)]
+        var ranSym = coinSymArr[Math.floor(Math.random() * coinSymArr.length)]
         API.getCoinData(ranSym["Symbol"])
           .then(res => {
             if(res.data.Response !== "Error" && res.data.DISPLAY[ranSym["Symbol"]]) {
-              console.log(ranSym)
+              console.log(ranSym["Id"])
               console.log("ransym is chosen")
-              this.setState({ coinsym: ranSym})
-              console.log(this.state.coinsym)
+              //this.setState({ coinsym: ranSym})
+              newRanSym.push(ranSym)
+              ranSymData.push(res.data.DISPLAY[ranSym["Symbol"]].USD)
+                this.setState({coinsym: newRanSym, coinResults: ranSymData, error: res.data.Message})
             } else {
               console.log(coinSymArr.indexOf(ranSym["Symbol"]))
               coinSymArr.splice(coinSymArr.indexOf(ranSym["Symbol"]), 1)
-              const ranSym1 = coinSymArr[Math.floor(Math.random() * coinSymArr.length)]
+              var ranSym1 = coinSymArr[Math.floor(Math.random() * coinSymArr.length)]
               console.log(ranSym1["Symbol"])
               API.getCoinData(ranSym1["Symbol"])
                 .then(res => {
                   if(res.data.Response === "Error") {
                     throw new Error(res.data.Message)
                   } else {
-                  this.setState({ coinsym: ranSym1, coinResults: res.data.DISPLAY[ranSym1["Symbol"]].USD})
                   console.log(ranSym1["Symbol"] + " is chosen")
                   console.log(res.data)
+                  newRanSym.push(ranSym1)
+                  ranSymData.push(res.data.DISPLAY[ranSym1["Symbol"]].USD)
                   }
+                  this.setState({ coinsym: newRanSym, coinResults: ranSymData, error: res.data.Message})
+                  console.log(this.state.coinResults)
+                  console.log(this.state.coinsym)
+                  console.log(this.state.error)
                 })
-                .catch(err => console.log("error"))
+                .catch(err => this.setState({ error: err.message}))
             }
           })
           .catch(err => 
-            console.log("error")
+            this.setState({ error: err.message })
             )
-
+          //this.setState({coinsym: newRanSym, coinResults: ranSymData})
       })
   }
 
   render() {
     return (
-      <div>
-        <h1>Discover Cryptocurrency</h1>
-        <h3></h3>
-        <RandomSearchResults
-        coinsym={this.state.coinsym}
-        coinresults={this.state.coinResults}
-        />
+      <div id="discover">
+        <div id="hbtn">
+        <h1><center>Discover Cryptocurrency</center></h1>
         <RandomSearchForm
           loadNextCoinSubmit={this.loadNextCoinSubmit}
         />
-
+        </div>
+        <Alert
+            type="danger"
+            style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
+        >
+            Sorry there was an error on the API call, please click 'Discover' again!
+        </Alert>
+        <RandomSearchResult
+        coinsym={this.state.coinsym}
+        coinResults={this.state.coinResults}
+        rancoinResults={this.state.rancoinResults}
+        />
       </div>
     )
   }

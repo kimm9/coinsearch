@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import "./Navbar.css"
 
 const Navbar = props => 
- <nav className="navbar navbar-expand-lg navbar-light bg-light">
+
+ <nav id="navbar" className="navbar navbar-expand-lg navbar-light  bg-light">
     <Link className="navbar-brand" to="/">
       CoinSearch
     </Link>
-    <div>
+    <div id="navtxt">
       <ul className="navbar-nav">
         <li
           className={
@@ -46,5 +47,6 @@ const Navbar = props =>
       </ul>
     </div>
   </nav>
+
 
 export default Navbar;

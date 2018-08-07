@@ -1,27 +1,20 @@
 import React from "react";
-import "./SearchResults.css";
+import "./RandomSearchResult.css"
 
+const RandomSearchResult = props => (
 
-
-const SearchResults = props => (
-
-
-<div>
-<div className="card" >
-{props.coinresults.map(result => (
+<div className="row">
+<div className="card">
+  {props.coinsym.map(result => (
   <div>
     <center>
-    <h1>
-    Search Results
-    </h1>
+    <h1>{result["CoinName"]}</h1>
     <img className="card-img-top" src={"https://www.cryptocompare.com" + result["ImageUrl"]} alt="Card image cap" />
     </center>
   </div>
-  
-  ))
-}
-<div className="card-body"> 
-{props.coinDataResults.map(result => (
+  ))}
+  <div className="card-body"> 
+  {props.coinResults.map(result => (
   <div>
   <table className="table table-hover">
   <thead>
@@ -45,12 +38,12 @@ const SearchResults = props => (
 
   </tbody>
 </table>
-  </div>
+</div>
 
   ))
 
 }
-{props.coinresults.map(result => (
+{props.coinsym.map(result => (
   <div>
     <center><a href={"https://www.cryptocompare.com" + result["Url"]}  className="btn btn-primary">See Full Details</a></center>
   </div>
@@ -63,4 +56,4 @@ const SearchResults = props => (
 
 );
 
-export default SearchResults;
+export default RandomSearchResult;

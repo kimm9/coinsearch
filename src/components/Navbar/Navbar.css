@@ -1,0 +1,10 @@
+#navbar {
+  background-color: #f9f7f7 !important;
+  font-size: 300px !important;
+  color: #fff !important;
+  font-weight: 400 !important;
+}
+
+.navbar-brand {
+  font-family: 'Faster One', cursive;
+}
