@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import Card from "../components/Card";
 import Alert from "../components/Alert";
 import RandomSearchForm from "../components/RandomSearchForm"
 import RandomSearchResult from "../components/RandomSearchResult"
